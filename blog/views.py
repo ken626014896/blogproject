@@ -5,13 +5,30 @@ from blog.models import Post,Category
 from comments.forms import CommentForm
 import  markdown
 
+#计算每篇文章的评论数
+def count_comments_number(a):
+        temp = 0
+        for i in a:
+            temp = temp + 1
+
+        return  temp
+
 # Create your views here.
+
+
+
 def  index(requset):
     articles=Post.objects.all().order_by('-created_time')
-    for i in articles:
-      print(i.get_absolute_url())
-    return  render(requset,"blog/index.html",{"articles":articles
 
+    for i in articles:
+      print("每篇文章的url:"+i.get_absolute_url())
+      print(i.comment_set.all())
+      #计算每篇文章的评论数
+      count = count_comments_number(i.comment_set.all())
+
+      print("这篇文章评论数为：", count)
+
+    return  render(requset,"blog/index.html",{"articles":articles,
 
                                               })
 

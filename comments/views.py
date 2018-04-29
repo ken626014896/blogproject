@@ -22,6 +22,11 @@ def post_comment(request,post_pk):
 
             comment.save()
 
+            #评论成功时增加文章的评论数
+            temp=post.comments_num
+            temp=temp+1
+            post.comments_num=temp
+            post.save()
             # 重定向到 post 的详情页，实际上当 redirect 函数接收一个模型的实例时，它会调用这个模型实例的 get_absolute_url 方法，
             # 然后重定向到 get_absolute_url 方法返回的 URL。
             return redirect(post)
